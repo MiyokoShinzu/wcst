@@ -240,7 +240,7 @@
         <div class="close-btn text-end" id="close-btn"><i class="bi bi-x"></i></div>
         <div class="sidebar-brand">
             <img src="./assets/logo.jpg" alt="Logo">
-            <h5>NAS President</h5>
+            <h5>Admin</h5>
         </div>
         <nav class="nav flex-column">
             <a class="nav-link" href="#"><i class="bi bi-house-fill"></i> Dashboard</a>
