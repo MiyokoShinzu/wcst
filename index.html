@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Worldstar College of Science and Technology</title>
+
+    <!-- SEO -->
+    <meta name="description" content="Worldstar College of Science and Technology – Excellence in education, innovation, and character formation.">
+    <meta name="keywords" content="Worldstar College, Science and Technology, College, Education Philippines">
+    <meta name="author" content="Worldstar College of Science and Technology">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="./assets/logo.jpg">
+    <!-- AOS CSS -->
+<link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+
+    
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            padding-top: 120px;
+            color: #333;
+        }
+
+        .announcement-bar {
+            background: #0d6efd;
+            color: #fff;
+            font-size: 0.95rem;
+        }
+
+        .hero {
+            background:
+                linear-gradient(rgba(255,255,255,0.92), rgba(255,255,255,0.92)),
+                url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1');
+            background-size: cover;
+            background-position: center;
+            min-height: 85vh;
+            display: flex;
+            align-items: center;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-weight: 700;
+            font-size: 2.1rem;
+        }
+
+        @media (min-width: 768px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+        }
+
+        .section-padding {
+            padding: 60px 0;
+        }
+
+        .section-title {
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .section-subtitle {
+            max-width: 720px;
+            margin: 0 auto 40px;
+            color: #555;
+        }
+
+        .carousel-item img {
+            height: 420px;
+            object-fit: cover;
+        }
+
+        .map-container {
+            height: 350px;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        footer {
+            background-color: #0d6efd;
+            color: #fff;
+        }
+
+        /* Divider SVG */
+        .section-divider {
+            display: block;
+            margin: 40px auto;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- ANNOUNCEMENT BANNER -->
+<div id="announcementCarousel" class="carousel slide fixed-top" data-bs-ride="carousel" data-bs-interval="4000" style="top:0;">
+    <div class="carousel-inner text-center py-2 announcement-bar">
+        <div class="carousel-item active">
+            📢<i class="bi bi-megaphone-fill mx-2"></i>  <strong>ANNOUNCEMENT:</strong> Enrollment for SY 2025–2026 is now OPEN!
+        </div>
+        <div class="carousel-item">
+            📢<i class="bi bi-info-circle-fill mx-2"></i>Welcome to Worldstar College of Science and Technology!
+        </div>
+        <div class="carousel-item">
+            📢<i class="bi bi-calendar-event-fill mx-2"></i>Visit our Admissions Office from Monday to Friday.
+        </div>
+    </div>
+</div>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top shadow-sm" style="top:40px;">
+    <div class="container">
+        <img src="./assets/logo.jpg" alt="Worldstar Logo" class="me-2" style="max-height:45px;">
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="mainNav">
+            <ul class="navbar-nav mx-auto text-center">
+                <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
+      
+                <li class="nav-item"><a class="nav-link" href="#tesda">TESDA Accredited Programs</a></li>
+                <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+
+                <!-- Login button responsive -->
+                <li class="nav-item ms-2 d-lg-none">
+                    <a href="login.html" class="nav-link">Login</a>
+                </li>
+                <li class="nav-item ms-2 d-none d-lg-block">
+                    <a href="login.php" class="btn btn-primary rounded-pill px-4">Login</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero py-5 text-center" data-aos="fade-down">
+    <div class="container">
+        <!-- Responsive logo -->
+        <img src="./assets/logo.jpg" alt="Worldstar College Logo" class="img-fluid mb-4" style="max-width: 200px; height: auto;">
+
+        <h1 class="fw-bold">Worldstar College of Science and Technology, Inc.</h1>
+        <p class="mt-3 fs-5">
+            Committed to academic excellence, technological innovation,
+            and the formation of competent, values-oriented professionals.
+        </p>
+        <a href="#admissions" class="btn btn-primary btn-lg mt-4 rounded-pill px-5">
+            Enroll Now
+        </a>
+    </div>
+</section>
+
+
+<!-- PROMOTIONAL VIDEO -->
+<section class="section-padding bg-light">
+    <div class="container text-center">
+        <h2 class="section-title">Watch Our Promotional Video</h2>
+        <p class="section-subtitle">Learn more about Worldstar College of Science and Technology</p>
+        <video controls autoplay muted loop class="w-100 rounded shadow-sm" style="max-width:800px;">
+            <source src="./assets/promovid.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+</section>
+
+
+<!-- ANNOUNCEMENTS / PROMOTIONS CAROUSEL -->
+<section class="section-padding bg-light">
+    <div class="container">
+        <div class="text-center">
+            <h2 class="section-title">Announcements & Promotions</h2>
+            <p class="section-subtitle">
+                Official updates and enrollment-related announcements
+            </p>
+        </div>
+
+        <div id="promoCarousel" class="carousel slide shadow-sm rounded-4 overflow-hidden" data-bs-ride="carousel">
+            <div class="carousel-inner">
+
+                <div class="carousel-item active">
+                    <img src="./assets/an1.jpg" class="h-50 w-100">
+                    <div class="carousel-caption bg-dark bg-opacity-50 rounded">
+                        <h5>Enrollment is Now Open</h5>
+                        <p>School Year 2025–2026</p>
+                        <a href="https://web.facebook.com/share/p/14Rk5Jo9rbi/" class="btn bg-warning text-white">
+                          Read More
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+            <button class="carousel-control-prev" type="button" data-bs-target="#promoCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+            </button>
+
+            <button class="carousel-control-next" type="button" data-bs-target="#promoCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon"></span>
+            </button>
+        </div>
+    </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="section-padding">
+    <div class="container text-center">
+        <h2 class="section-title">About Worldstar College</h2>
+        <p class="section-subtitle">
+          In year 2016, the administrators of Isabela Colleges of Science and Technology (est.1997) have decided to expand its horizons and go beyond offering computer courses. It also decided to operate under a name that is rooted from its previous identities. Now it is known as the Worldstar College of Science and Technology, Inc.. Up until today, the institution continues to provide prime quality of education and create competent individuals who are industry ready and contributes to the improvement and advancement of their fields.
+          Throughout the years, ICST has been providing high quality yet affordable education, making it available to anyone who is willing to study and learn. They also offer several scholarships to students who are financially challenged but have the determination to finish schooling. ICST assures that each student gets equal opportunity to learn. Statistically speaking, 95% of the total graduates are now employed in different areas in the Philippines and some, overseas.
+        </p>
+    </div>
+</section>
+<!-- TESDA ACCREDITED PROGRAMS -->
+<section id="tesda" class="section-padding bg-white">
+    <div class="container text-center">
+        <h2 class="section-title">TESDA Accredited Programs</h2>
+
+        <div class="row g-4 mt-4 justify-content-center">
+            <!-- Computer Systems Servicing NC II -->
+            <div class="col-md-6 col-sm-6">
+                <div class="program-card p-4 rounded text-center">
+                    <img src="./assets/css.png" 
+                         alt="Computer Systems Servicing NC II" class="img-fluid mb-3 rounded">
+                    <h3 class="mb-0 mt-2">Computer Systems Servicing NC II</h3>
+                </div>
+            </div>
+
+            <!-- Electronics Products Assembly & Servicing NC II -->
+            <div class="col-md-6 col-sm-6">
+                <div class="program-card p-4 rounded text-center">
+                    <img src="https://twc.tesda.gov.ph/services/images/epas.jpg" 
+                         alt="Electronics Product Assembly & Servicing NC II" class="img-fluid mb-3 rounded">
+                    <h3 class="mb-0 mt-2">Electronics Product Assembly & Servicing NC II</h3>
+                </div>
+            </div>
+            <!-- Japanese Language and Culture Level II -->
+            <div class="col-md-6 col-sm-6">
+                <div class="program-card p-4 rounded text-center">
+                    <img src="./assets/japanese.jpg" 
+                         alt="Japanese Language & Culture Level II" class="img-fluid mb-3 rounded">
+                    <h3 class="mb-0 mt-2">Japanese Language & Culture Level II</h3>
+                </div>
+            </div>
+
+
+            <!-- Driving NC II -->
+            <div class="col-md-6 col-sm-6">
+                <div class="program-card p-4 rounded text-center">
+                    <img src="./assets/driving.jpg" 
+                         alt="Driving NC II Training" class="img-fluid mb-3 rounded">
+                    <h3 class="mb-0 mt-2">Driving NC II</h3>
+                </div>
+            </div>
+
+            <!-- Subtext or additional description -->
+            <div class="col-md-12">
+                <p class="section-subtitle">
+                    Worldstar College of Science and Technology offers programs recognized and accredited by TESDA, ensuring industry‑standard training and certification for our students.
+                </p>
+            </div>
+
+            <!-- Read More Button -->
+            <div class="col-12 text-center mt-3">
+              <a href="https://tesdatrainingcourses.com/worldstar-college-of-science-technology-formerly-isabela-college-of-science-technology.html" class="btn btn-primary">
+                Read More
+              </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CSS for hover effect -->
+<style>
+.program-card {
+    background-color: #ffffff; 
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    cursor: pointer;
+}
+
+.program-card:hover {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    transform: translateY(-3px);
+}
+</style>
+
+<!-- CONTACT + MAP -->
+<section id="contact" class="section-padding bg-light">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-6 text-center text-md-start mb-4 mb-md-0">
+                <h2 class="section-title">Contact Us</h2>
+                <p class="section-subtitle">
+                    <i class="bi bi-envelope-fill"></i> wcst.2016@gmail.com<br>
+                    <i class="bi bi-telephone-fill"></i> +639169088531<br>
+                    <i class="bi bi-geo-alt-fill"></i> Alliance Bldg., National Highway, Bantug, Roxas, Philippines, 3320 <br>
+                    <i class="bi bi-facebook">
+                    </i>
+                    <a href="https://web.facebook.com/WCST2016" class="text-primary">Worldstar College of Science and Technology Inc.</a>
+                </p>
+            </div>
+            <div class="col-md-6">
+                <div class="map-container mt-4 mt-md-0 shadow-sm">
+                    <iframe
+                        src="https://www.google.com/maps?q=Alliance%20Bldg.,%20National%20Highway,%20Bantug,%20Roxas,%20Philippines&output=embed"
+                        loading="lazy">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="py-4 text-center">
+    <small>© 2025 Worldstar College of Science and Technology. All Rights Reserved.</small>
+    
+</footer>
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+                  <script src="https://animatedicons.co/scripts/embed-animated-icons.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('a.nav-link').on('click', function (e) {
+            if (this.hash !== "") {
+                e.preventDefault();
+                $('html, body').animate({
+                    scrollTop: $(this.hash).offset().top - 120
+                }, 600);
+            }
+        });
+    });
+</script>
+<!-- AOS JS -->
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script>
+  AOS.init();
+</script>
+
+
+</body>
+</html>
