@@ -1,8 +1,8 @@
 <?php
 $servername = "localhost";
-$username = "root"; // Change username
-$password = ""; // Change password
-$dbname = "wcst_db"; // Change database name
+$username = "u148988291_wcst"; // Change username
+$password = "c6ehxV57"; // Change password
+$dbname = "u148988291_wcst_db"; // Change database name
 
 $mysqli = new mysqli($servername, $username, $password, $dbname);
 
