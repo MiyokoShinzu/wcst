@@ -124,7 +124,7 @@
 
         strtolower(
             $user['role']
-        ) != 'student'
+        ) != 'faculty'
 
     ) {
 
