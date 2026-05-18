@@ -743,11 +743,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                         </option>
 
-                        <option value="faculty">
-
-                            Faculty
-
-                        </option>
 
                     </select>
 
