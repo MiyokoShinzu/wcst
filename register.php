@@ -6,7 +6,9 @@ global $mysqli;
 
 $message = "";
 
-/* REGISTER PROCESS */
+/* =====================================
+   REGISTER PROCESS
+===================================== */
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
@@ -22,7 +24,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $role =
         trim($_POST['role']);
 
-    /* VALIDATION */
+    /* =====================================
+       VALIDATION
+    ====================================== */
 
     if (
         empty($username) ||
@@ -74,7 +78,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         ";
     } else {
 
-        /* CHECK EXISTING USER */
+        /* =====================================
+           CHECK EXISTING USER
+        ====================================== */
 
         $checkStmt =
             $mysqli->prepare("
@@ -109,7 +115,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             ";
         } else {
 
-            /* HASH PASSWORD */
+            /* =====================================
+               HASH PASSWORD
+            ====================================== */
 
             $hashedPassword =
                 password_hash(
@@ -117,7 +125,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     PASSWORD_DEFAULT
                 );
 
-            /* INSERT ACCOUNT */
+            /* =====================================
+               INSERT ACCOUNT
+            ====================================== */
 
             $stmt =
                 $mysqli->prepare("
@@ -129,11 +139,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     role,
                     date_created,
                     archived,
-                    date_archived
+                    date_archived,
+                    status
                 )
                 VALUES
                 (
-                    ?, ?, ?, ?, NOW(), 0, NULL
+                    ?, ?, ?, ?, NOW(), 0, NULL, 0
                 )
             ");
 
@@ -145,7 +156,84 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $role
             );
 
+            /* =====================================
+               EXECUTE
+            ====================================== */
+
             if ($stmt->execute()) {
+
+                /* =====================================
+                   GET INSERTED ACCOUNT ID
+                ====================================== */
+
+                $account_id =
+                    $mysqli->insert_id;
+
+                /* =====================================
+                   CREATE STUDENT PROFILE
+                ====================================== */
+
+                if ($role == 'student') {
+
+                    $studentStmt =
+                        $mysqli->prepare("
+                            INSERT INTO student_profiles(
+
+                                account_id
+
+                            )
+
+                            VALUES(
+
+                                ?
+                            )
+                        ");
+
+                    if ($studentStmt) {
+
+                        $studentStmt->bind_param(
+                            "i",
+                            $account_id
+                        );
+
+                        $studentStmt->execute();
+
+                        $studentStmt->close();
+                    }
+                }
+
+                /* =====================================
+                   CREATE FACULTY PROFILE
+                ====================================== */
+
+                if ($role == 'faculty') {
+
+                    $facultyStmt =
+                        $mysqli->prepare("
+                            INSERT INTO faculty_profiles(
+
+                                account_id
+
+                            )
+
+                            VALUES(
+
+                                ?
+                            )
+                        ");
+
+                    if ($facultyStmt) {
+
+                        $facultyStmt->bind_param(
+                            "i",
+                            $account_id
+                        );
+
+                        $facultyStmt->execute();
+
+                        $facultyStmt->close();
+                    }
+                }
 
                 $message = "
                 <div class='alert alert-success'>
@@ -214,8 +302,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <style>
         * {
+
             margin: 0;
+
             padding: 0;
+
             box-sizing: border-box;
         }
 
@@ -241,10 +332,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             position: relative;
         }
-
-        /* ========================================
-           BACKGROUND SHAPES
-        ======================================== */
 
         .bg-shape {
 
@@ -293,10 +380,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             transform: translateY(-50%);
         }
 
-        /* ========================================
-           REGISTER WRAPPER
-        ======================================== */
-
         .register-wrapper {
 
             width: 100%;
@@ -309,10 +392,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             z-index: 2;
         }
-
-        /* ========================================
-           REGISTER CARD
-        ======================================== */
 
         .register-card {
 
@@ -338,30 +417,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             color: white;
         }
 
-        .register-card::before {
-
-            content: '';
-
-            position: absolute;
-
-            width: 260px;
-
-            height: 260px;
-
-            border-radius: 50%;
-
-            background:
-                rgba(255, 255, 255, 0.05);
-
-            top: -120px;
-
-            right: -120px;
-        }
-
-        /* ========================================
-           LOGO
-        ======================================== */
-
         .logo-wrapper {
 
             text-align: center;
@@ -385,10 +440,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             box-shadow:
                 0 12px 35px rgba(0, 0, 0, 0.20);
         }
-
-        /* ========================================
-           TITLES
-        ======================================== */
 
         .register-title {
 
@@ -415,10 +466,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             line-height: 1.7;
         }
 
-        /* ========================================
-           ALERTS
-        ======================================== */
-
         .alert {
 
             border: none;
@@ -429,10 +476,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             margin-bottom: 25px;
         }
-
-        /* ========================================
-           INPUTS
-        ======================================== */
 
         .form-label {
 
@@ -454,17 +497,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             overflow: hidden;
 
             margin-bottom: 22px;
-
-            transition: 0.3s ease;
-        }
-
-        .input-group:focus-within {
-
-            border-color:
-                rgba(255, 255, 255, 0.35);
-
-            box-shadow:
-                0 0 0 4px rgba(255, 255, 255, 0.06);
         }
 
         .input-group-text {
@@ -489,8 +521,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             padding: 15px;
 
-            font-size: 0.95rem;
-
             box-shadow: none !important;
         }
 
@@ -505,15 +535,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             color: black;
         }
 
-        /* ========================================
-           PASSWORD TOGGLE
-        ======================================== */
-
-        .password-group {
-
-            position: relative;
-        }
-
         .password-toggle {
 
             width: 55px;
@@ -524,47 +545,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             color:
                 rgba(255, 255, 255, 0.75);
-
-            transition: 0.3s ease;
         }
-
-        .password-toggle:hover {
-
-            color: white;
-
-            transform: scale(1.05);
-        }
-
-        /* ========================================
-           NOTES
-        ======================================== */
-
-        .password-note {
-
-            margin-top: -8px;
-
-            margin-bottom: 20px;
-
-            font-size: 0.82rem;
-
-            color:
-                rgba(255, 255, 255, 0.70);
-
-            display: flex;
-
-            align-items: center;
-
-            gap: 8px;
-        }
-
-        .password-note i {
-
-            color: #6ee7b7;
-        }
-
-        /* ========================================
-           BUTTON
-        ======================================== */
 
         .btn-register {
 
@@ -583,21 +564,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             font-weight: 700;
 
             font-size: 1rem;
-
-            transition: 0.35s ease;
         }
-
-        .btn-register:hover {
-
-            transform: translateY(-4px);
-
-            box-shadow:
-                0 18px 40px rgba(16, 185, 129, 0.28);
-        }
-
-        /* ========================================
-           EXTRA LINKS
-        ======================================== */
 
         .extra-links {
 
@@ -620,10 +587,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             font-weight: 700;
         }
 
-        /* ========================================
-           FOOTER
-        ======================================== */
-
         .register-footer {
 
             text-align: center;
@@ -635,54 +598,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             color:
                 rgba(255, 255, 255, 0.60);
         }
-
-        /* ========================================
-           RESPONSIVE
-        ======================================== */
-
-        @media(max-width:768px) {
-
-            body {
-
-                overflow: auto;
-
-                padding: 20px;
-            }
-
-            .register-card {
-
-                padding: 40px 25px;
-            }
-
-            .register-title {
-
-                font-size: 1.8rem;
-            }
-
-            .logo-wrapper img {
-
-                width: 95px;
-
-                height: 95px;
-            }
-        }
     </style>
 
 </head>
 
 <body>
 
-    <!-- BACKGROUND -->
     <div class="bg-shape shape1"></div>
     <div class="bg-shape shape2"></div>
     <div class="bg-shape shape3"></div>
 
-    <!-- REGISTER -->
     <div class="register-wrapper">
 
         <div class="register-card">
 
-            <!-- LOGO -->
             <div class="logo-wrapper">
 
                 <img
@@ -691,7 +620,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             </div>
 
-            <!-- TITLE -->
             <h1 class="register-title">
 
                 Create Account
@@ -701,19 +629,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <p class="register-subtitle">
 
                 Worldstar College of Science
-                and Technology Inc.<br>
-
-                Secure Registration Portal
+                and Technology Inc.
 
             </p>
 
-            <!-- MESSAGE -->
             <?php echo $message; ?>
 
-            <!-- FORM -->
             <form method="POST">
 
-                <!-- USERNAME -->
                 <label class="form-label">
 
                     Username
@@ -737,7 +660,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 </div>
 
-                <!-- EMAIL -->
                 <label class="form-label">
 
                     Email Address
@@ -761,14 +683,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 </div>
 
-                <!-- PASSWORD -->
                 <label class="form-label">
 
                     Password
 
                 </label>
 
-                <div class="input-group password-group">
+                <div class="input-group">
 
                     <span class="input-group-text">
 
@@ -784,7 +705,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         placeholder="Enter password"
                         required>
 
-                    <!-- TOGGLE -->
                     <button
                         type="button"
                         class="password-toggle"
@@ -798,17 +718,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 </div>
 
-                <!-- NOTE -->
-                <div class="password-note">
-
-                    <i class="bi bi-shield-lock-fill"></i>
-
-                    Username: minimum 5 characters |
-                    Password: minimum 4 characters
-
-                </div>
-
-                <!-- ROLE -->
                 <label class="form-label">
 
                     Account Role
@@ -844,7 +753,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 </div>
 
-                <!-- BUTTON -->
                 <button
                     type="submit"
                     class="btn btn-register">
@@ -855,7 +763,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             </form>
 
-            <!-- LOGIN -->
             <div class="extra-links">
 
                 Already have an account?
@@ -868,7 +775,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             </div>
 
-            <!-- FOOTER -->
             <div class="register-footer">
 
                 © 2025 WCST. All Rights Reserved.
@@ -878,9 +784,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
 
     </div>
-
-    <!-- BOOTSTRAP -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
         function togglePassword() {

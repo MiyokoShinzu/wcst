@@ -6,8 +6,6 @@ require_once "src/connection.php";
 
 global $mysqli;
 
-/* LOGIN PROCESS */
-
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $username =
@@ -53,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $user =
                 $result->fetch_assoc();
 
-            /* CHECK IF ARCHIVED */
+
 
             if ($user['archived'] == 1) {
 
@@ -61,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     "Account archived.";
             } else {
 
-                /* VERIFY PASSWORD */
+            
 
                 if (
                     password_verify(
@@ -70,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     )
                 ) {
 
-                    /* SESSION */
+                  
 
                     $_SESSION['user_id'] =
                         $user['id'];
@@ -83,9 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                     session_regenerate_id(true);
 
-                    /* REDIRECT */
-
-                    /* ROLE-BASED REDIRECT */
+            
 
                     $role =
                         $user['role'];
@@ -95,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         case 'admin':
 
                             header(
-                                "Location: admin.php"
+                                "Location: ./admin"
                             );
 
                             break;
@@ -103,7 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         case 'student':
 
                             header(
-                                "Location: student.php"
+                                "Location: ./student"
                             );
 
                             break;
@@ -111,7 +107,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         case 'faculty':
 
                             header(
-                                "Location: faculty.php"
+                                "Location: ./faculty"
                             );
 
                             break;
@@ -119,7 +115,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         default:
 
                             header(
-                                "Location: dashboard.php"
+                                "Location: ./dashboard"
                             );
 
                             break;
@@ -811,13 +807,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                   
 
-                    <a
-                        href="forgot_password.php"
-                        class="forgot-link">
-
-                        Forgot Password?
-
-                    </a>
+                    
 
                 </div>
 

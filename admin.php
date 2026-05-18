@@ -235,35 +235,7 @@
 
 <body>
 
-    <!-- Left Sidebar -->
-    <div class="sidebar" id="sidebar">
-        <div class="close-btn text-end" id="close-btn"><i class="bi bi-x"></i></div>
-        <div class="sidebar-brand">
-            <img src="./assets/logo.jpg" alt="Logo">
-            <h5>Admin</h5>
-        </div>
-        <nav class="nav flex-column">
-            <a class="nav-link" href="#"><i class="bi bi-house-fill"></i> Dashboard</a>
-            <a class="nav-link collapsed" data-bs-toggle="collapse" href="#studentsSubmenu"><i class="bi bi-people-fill"></i> Manage Students <i class="bi bi-chevron-right dropdown-icon"></i></a>
-            <div class="collapse submenu" id="studentsSubmenu">
-                <a class="nav-link" href="#">Add Student</a>
-                <a class="nav-link" href="#">View Students</a>
-            </div>
-            <a class="nav-link collapsed" data-bs-toggle="collapse" href="#programsSubmenu"><i class="bi bi-journal-text"></i> Manage Programs <i class="bi bi-chevron-right dropdown-icon"></i></a>
-            <div class="collapse submenu" id="programsSubmenu">
-                <a class="nav-link" href="#">Add Program</a>
-                <a class="nav-link" href="#">View Programs</a>
-            </div>
-            <a class="nav-link collapsed" data-bs-toggle="collapse" href="#staffSubmenu"><i class="bi bi-person-badge-fill"></i> Manage Staff <i class="bi bi-chevron-right dropdown-icon"></i></a>
-            <div class="collapse submenu" id="staffSubmenu">
-                <a class="nav-link" href="#">Add Staff</a>
-                <a class="nav-link" href="#">View Staff</a>
-            </div>
-            <a class="nav-link" href="#"><i class="bi bi-calendar-check-fill"></i> Enrollments</a>
-            <a class="nav-link" href="#"><i class="bi bi-gear-fill"></i> Settings</a>
-            <a class="nav-link" href="logout.php"><i class="bi bi-box-arrow-right"></i> Logout</a>
-        </nav>
-    </div>
+    <?php include "globals/admin_sidebar.php"?>
 
     <!-- Main Content -->
     <div class="content">
