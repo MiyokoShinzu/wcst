@@ -324,12 +324,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             overflow-x: hidden;
 
-            background:
+            /* background:
                 linear-gradient(135deg,
                     #064e3b,
                     #047857,
-                    #10b981);
-
+                    #10b981); */
+            background:
+                linear-gradient(135deg,
+                    #c7e314,
+                    #b4e308,
+                    #cc9108);
             position: relative;
         }
 
