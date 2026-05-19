@@ -314,7 +314,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             font-family: 'Poppins', sans-serif;
 
-            min-height: 100vh;
+            min-height: 120vh;
 
             display: flex;
 
