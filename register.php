@@ -636,6 +636,35 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <?php echo $message; ?>
 
             <form method="POST">
+                <label class="form-label">
+
+                    Account Role
+
+                </label>
+                <div class="input-group">
+
+                    <span class="input-group-text">
+
+                        <i class="bi bi-person-badge-fill"></i>
+
+                    </span>
+
+                    <select
+                        name="role"
+                        class="form-select"
+                        required>
+
+                        <option value="student">
+
+                            Student
+
+                        </option>
+
+
+                    </select>
+
+                </div>
+
 
                 <label class="form-label">
 
@@ -718,35 +747,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 </div>
 
-                <label class="form-label">
 
-                    Account Role
-
-                </label>
-
-                <div class="input-group">
-
-                    <span class="input-group-text">
-
-                        <i class="bi bi-person-badge-fill"></i>
-
-                    </span>
-
-                    <select
-                        name="role"
-                        class="form-select"
-                        required>
-
-                        <option value="student">
-
-                            Student
-
-                        </option>
-
-
-                    </select>
-
-                </div>
 
                 <button
                     type="submit"
