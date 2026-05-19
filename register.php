@@ -332,8 +332,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             background:
                 linear-gradient(135deg,
                     #c7e314,
-                    #080fe3,
-                    #cc9108);
+                    #0409a4,
+                    #bfcc08);
             position: relative;
         }
 
