@@ -265,21 +265,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $mysqli->prepare("
                     INSERT INTO faculty_profiles(
 
-                        account_id
+                        account_id, firstname, middlename, lastname
 
                     )
 
                     VALUES(
 
-                        ?
+                        ?, ?, ?, ?
                     )
                 ");
+            $firstname = "N/A";
+            $middlename = "N/A";
+            $lastname = "N/A";
 
             if ($facultyStmt) {
 
                 $facultyStmt->bind_param(
-                    "i",
-                    $account_id
+                    "isss",
+                    $account_id,
+                    $firstname,
+                    $middlename,
+                    $lastname
+
                 );
 
                 $facultyStmt->execute();

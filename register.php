@@ -22,10 +22,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         trim($_POST['password']);
 
     $role =
-        trim($_POST['role']);
+        'student';
 
     /* =====================================
-       VALIDATION
+       VALIDATION;
     ====================================== */
 
     if (
@@ -179,21 +179,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         $mysqli->prepare("
                             INSERT INTO student_profiles(
 
-                                account_id
+                                account_id, firstname, lastname, middlename
 
                             )
 
                             VALUES(
 
-                                ?
+                                ?,?,?,?
                             )
                         ");
-
+                    $firstname = 'N/A';
+                    $lastname = 'N/A';
+                    $middlename = 'N/A';
                     if ($studentStmt) {
 
                         $studentStmt->bind_param(
-                            "i",
-                            $account_id
+                            "isss",
+                            $account_id, $firstname, $lastname, $middlename
                         );
 
                         $studentStmt->execute();
@@ -640,12 +642,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <?php echo $message; ?>
 
             <form method="POST">
-                <label class="form-label">
+                <label class="form-label" style="display: none;">
 
                     Account Role
 
                 </label>
-                <div class="input-group">
+                <div class="input-group" style="opacity: 0; pointer-events: none; position:absolute;">
 
                     <span class="input-group-text">
 

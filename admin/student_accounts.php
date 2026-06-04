@@ -78,13 +78,13 @@
 
                     <h3 class="fw-bold text-primary">
 
-                        Manage Accounts
+                        Manage Student Accounts
 
                     </h3>
 
                     <p class="text-muted mb-0">
 
-                        View and manage all user accounts.
+                        View and manage all student accounts.
 
                     </p>
 
@@ -276,7 +276,7 @@
             </div>
 
             <!-- STATUS -->
-            <div class="mb-4" style="position: absolute; opacity: 0; pointer-events: none;">
+            <div class="mb-4">
 
                 <label class="form-label">
 
@@ -294,7 +294,11 @@
 
                     </option>
 
-                   
+                    <option value="0">
+
+                        Pending Approval
+
+                    </option>
 
                 </select>
 
@@ -414,18 +418,7 @@
                     class="form-select"
                     id="edit_role">
 
-                    <option value="admin">
-
-                        Admin
-
-                    </option>
-
-                    <option value="faculty">
-
-                        Faculty
-
-                    </option>
-
+                   
                     <option value="student">
 
                         Student
@@ -544,6 +537,9 @@
                     Student Profile
 
                 </h4>
+                <input
+                    type="hidden"
+                    id="view_account_id">
 
                 <button
                     onclick="closeStudentModal()"
@@ -666,6 +662,43 @@
                     </div>
 
                 </div>
+                <!-- ACTIONS -->
+
+                <div class="
+d-flex
+justify-content-end
+gap-2
+mt-4
+">
+
+                    <button
+                        onclick="closeStudentModal()"
+                        class="
+        btn
+        btn-secondary
+        rounded-pill
+        px-4
+        ">
+
+                        Close
+
+                    </button>
+
+                    <button
+                        id="approveStudentBtn"
+                        onclick="approveStudentAccount()"
+                        class="
+        btn
+        btn-success
+        rounded-pill
+        px-4
+        ">
+
+                        Approve Account
+
+                    </button>
+
+                </div>
 
             </div>
 
@@ -744,7 +777,7 @@
         ====================================== */
 
         fetch(
-                '../api/admin_select_accounts.php'
+                '../api/admin_select_accounts_students.php'
             )
 
             .then(
@@ -944,20 +977,6 @@
 
                     buttons: [
 
-                        {
-                            text: 'Add Account',
-
-                            className: 'add_account',
-
-                            attr: {
-
-                                'data-bs-toggle': 'modal',
-
-                                'data-bs-target': '#add_account',
-
-                                'title': 'Click to add account'
-                            }
-                        },
 
                         {
                             extend: 'excel',
@@ -1435,6 +1454,33 @@
 
                     const student =
                         data.data;
+                    const approveBtn =
+                        document.getElementById(
+                            'approveStudentBtn'
+                        );
+
+                    if (
+
+                        student.status == 1 ||
+
+                        student.status == '1'
+
+                    ) {
+
+                        approveBtn.style.display =
+                            'none';
+
+                    } else {
+
+                        approveBtn.style.display =
+                            'inline-block';
+
+                    }
+
+                    document.getElementById(
+                            'view_account_id'
+                        ).value =
+                        account_id;
 
                     document.getElementById(
                             'view_student_number'
@@ -1507,6 +1553,85 @@
             document.getElementById(
                 'viewStudentModal'
             ).style.display = 'none';
+        }
+        async function approveStudentAccount() {
+
+            const account_id =
+
+                document.getElementById(
+                    'view_account_id'
+                ).value;
+
+            if (
+
+                !confirm(
+                    'Approve this student account?'
+                )
+
+            ) {
+
+                return;
+            }
+
+            const formData =
+                new FormData();
+
+            formData.append(
+                'account_id',
+                account_id
+            );
+
+            try {
+
+                const response =
+                    await fetch(
+                        '../api/admin_approve_student.php', {
+                            method: 'POST',
+                            body: formData
+                        }
+                    );
+
+                const data =
+                    await response.json();
+
+                if (
+
+                    data.success == 1
+
+                ) {
+
+                    showToast(
+                        'Student approved successfully.'
+                    );
+
+                    closeStudentModal();
+
+                    setTimeout(() => {
+
+                        location.reload();
+
+                    }, 1000);
+
+                } else {
+
+                    showToast(
+                        data.message,
+                        'danger'
+                    );
+
+                }
+
+            } catch (error) {
+
+                console.log(error);
+
+                showToast(
+                    'Server error.',
+                    'danger'
+                );
+
+            }
+
         }
     </script>
 

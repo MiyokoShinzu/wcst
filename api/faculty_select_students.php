@@ -38,9 +38,9 @@ $query = "
 
         CONCAT(
 
-            student_profiles.firstname,
+            student_profiles.lastname,
             ' ',
-            student_profiles.lastname
+            student_profiles.firstname
 
         ) AS full_name,
 

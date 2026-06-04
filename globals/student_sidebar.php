@@ -1,4 +1,33 @@
 <!-- LEFT SIDEBAR -->
+<?php
+
+$user_id =
+    intval(
+        $_SESSION['user_id'] ?? 0
+    );
+
+$account =
+    $mysqli->query("
+
+        SELECT status
+
+        FROM accounts
+
+        WHERE id = '$user_id'
+
+        LIMIT 1
+
+    ");
+
+$accountData =
+    $account->fetch_assoc();
+
+$account_status =
+    $accountData['status']
+    ?? 'Pending';
+?>
+
+
 <div class="sidebar" id="sidebar">
 
     <!-- CLOSE BUTTON -->
@@ -21,7 +50,9 @@
 
         </h5>
 
+
     </div>
+
 
     <!-- NAVIGATION -->
     <nav class="nav flex-column">
@@ -36,7 +67,7 @@
         </a>
 
         <!-- ACCOUNTS -->
-        
+
 
         <!-- STUDENTS -->
         <a
@@ -63,15 +94,16 @@
 
             </a>
 
+
         </div>
 
 
-       
 
-       
-      
 
-     
+
+
+
+
 
         <!-- LOGOUT -->
         <a class="nav-link logout-link" href="logout.php">
@@ -83,6 +115,58 @@
         </a>
 
     </nav>
+    <div class="mt-2" style="position: absolute; bottom: 20px; left: 20px;">
+
+        <?php
+
+        if (
+
+            $account_status == '1'
+
+        ) {
+
+        ?>
+
+            <span class="
+        badge
+        bg-success
+        px-3
+        py-2
+        ">
+
+             <i class="bi bi-check-circle-fill"></i>   Approved Student Account 
+                <br>
+                
+
+            </span>
+
+        <?php
+
+        } else {
+
+        ?>
+
+            <span class="
+        badge
+        bg-secondary
+        text-white
+        px-3
+        py-2
+        ">
+
+                Pending Account Approval <br><br>
+                <small>Complete your profile.</small>
+
+            </span>
+
+        <?php
+
+        }
+
+        ?>
+
+    </div>
+
 
 </div>
 
@@ -460,4 +544,3 @@
         }
     }
 </style>
-

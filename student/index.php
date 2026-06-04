@@ -84,10 +84,19 @@ $query = "
 
         enrolled_subjects.id,
 
-        enrolled_subjects.grade,
+        enrolled_subjects.prelim,
 
-        enrolled_subjects.grade_updated,
+enrolled_subjects.midterm,
 
+enrolled_subjects.prefinal,
+
+enrolled_subjects.final,
+
+enrolled_subjects.average,
+
+enrolled_subjects.remarks,
+
+enrolled_subjects.grade_updated,
         subjects.subject_code,
         subjects.subject_name,
         subjects.units,
@@ -194,6 +203,7 @@ $checklist =
 
             <!-- HEADER -->
 
+
             <div class="
         d-flex
         justify-content-between
@@ -247,7 +257,7 @@ $checklist =
             py-3
             ">
 
-               
+
 
                 </div>
 
@@ -264,73 +274,38 @@ $checklist =
                             id="checklistTable">
 
                             <thead class="table-primary">
-
                                 <tr>
 
-                                    <th>
+                                    <th>School Year</th>
 
-                                        School Year
+                                    <th>Semester</th>
 
-                                    </th>
+                                    <th>Subject Code</th>
 
-                                    <th>
+                                    <th>Subject Name</th>
 
-                                        Semester
+                                    <th>Units</th>
 
-                                    </th>
+                                    <th>Course</th>
 
-                                    <th>
+                                    <th>Faculty</th>
 
-                                        Subject Code
+                                    <th>Prelim</th>
 
-                                    </th>
+                                    <th>Midterm</th>
 
-                                    <th>
+                                    <th>Prefinal</th>
 
-                                        Subject Name
+                                    <th>Final</th>
 
-                                    </th>
+                                    <th>Average</th>
 
-                                    <th>
+                                    <th>Grade Updated</th>
 
-                                        Units
-
-                                    </th>
-
-                                    <th>
-
-                                        Course
-
-                                    </th>
-
-                                    <th>
-
-                                        Faculty
-
-                                    </th>
-
-                                    <th>
-
-                                        Grade
-
-                                    </th>
-
-                                    <th>
-
-                                        Grade Updated
-
-                                    </th>
-
-                                    <th>
-
-                                        Remarks
-
-                                    </th>
+                                    <th>Remarks</th>
 
                                 </tr>
-
                             </thead>
-
                             <tbody>
 
                                 <?php
@@ -350,171 +325,74 @@ $checklist =
 
                                     ) {
 
-                                        $grade =
-                                            $row['grade'];
-
-                                        /* =====================================
-                                   REMARKS
-                                ===================================== */
-
-                                        if (
-
-                                            $grade === NULL ||
-
-                                            $grade === ''
-
-                                        ) {
-
-                                            $remarks =
-                                                '<span class="
-                                    badge
-                                    bg-secondary
-                                    ">
-                                    No Grade
-                                    </span>';
-                                        } elseif (
-
-                                            floatval($grade) >= 75
-
-                                        ) {
-
-                                            $remarks =
-                                                '<span class="
-                                    badge
-                                    bg-success
-                                    ">
-                                    Passed
-                                    </span>';
-                                        } else {
-
-                                            $remarks =
-                                                '<span class="
-                                    badge
-                                    bg-danger
-                                    ">
-                                    Failed
-                                    </span>';
-                                        }
-
                                 ?>
 
                                         <tr>
 
                                             <td>
-
-                                                <?php
-                                                echo htmlspecialchars(
-                                                    $row['school_year']
-                                                );
-                                                ?>
-
+                                                <?php echo htmlspecialchars($row['school_year']); ?>
                                             </td>
 
                                             <td>
-
-                                                <?php
-                                                echo htmlspecialchars(
-                                                    $row['semester']
-                                                );
-                                                ?>
-
+                                                <?php echo htmlspecialchars($row['semester']); ?>
                                             </td>
 
                                             <td>
-
-                                                <?php
-                                                echo htmlspecialchars(
-                                                    $row['subject_code']
-                                                );
-                                                ?>
-
+                                                <?php echo htmlspecialchars($row['subject_code']); ?>
                                             </td>
 
                                             <td>
-
-                                                <?php
-                                                echo htmlspecialchars(
-                                                    $row['subject_name']
-                                                );
-                                                ?>
-
+                                                <?php echo htmlspecialchars($row['subject_name']); ?>
                                             </td>
 
                                             <td>
-
-                                                <?php
-                                                echo htmlspecialchars(
-                                                    $row['units']
-                                                );
-                                                ?>
-
+                                                <?php echo htmlspecialchars($row['units']); ?>
                                             </td>
 
                                             <td>
-
-                                                <?php
-                                                echo htmlspecialchars(
-                                                    $row['course_name']
-                                                );
-                                                ?>
-
+                                                <?php echo htmlspecialchars($row['course_name']); ?>
                                             </td>
 
                                             <td>
+                                                <?php echo htmlspecialchars($row['faculty_name']); ?>
+                                            </td>
 
-                                                <?php
-                                                echo htmlspecialchars(
-                                                    $row['faculty_name']
-                                                );
-                                                ?>
+                                            <td>
+                                                <?php echo ($row['prelim'] !== null && $row['prelim'] !== '') ? $row['prelim'] : '-'; ?>
+                                            </td>
 
+                                            <td>
+                                                <?php echo ($row['midterm'] !== null && $row['midterm'] !== '') ? $row['midterm'] : '-'; ?>
+                                            </td>
+
+                                            <td>
+                                                <?php echo ($row['prefinal'] !== null && $row['prefinal'] !== '') ? $row['prefinal'] : '-'; ?>
+                                            </td>
+
+                                            <td>
+                                                <?php echo ($row['final'] !== null && $row['final'] !== '') ? $row['final'] : '-'; ?>
+                                            </td>
+
+                                            <td>
+                                                <strong>
+                                                    <?php echo ($row['average'] !== null && $row['average'] !== '') ? $row['average'] : '-'; ?>
+                                                </strong>
                                             </td>
 
                                             <td>
 
                                                 <?php
 
-                                                echo
+                                                echo !empty($row['grade_updated'])
 
-                                                $grade !== NULL
-                                                    &&
-                                                    $grade !== ''
-
-                                                    ?
-
-                                                    htmlspecialchars($grade)
-
-                                                    :
-
-                                                    '-';
-
-                                                ?>
-
-                                            </td>
-
-                                            <td>
-
-                                                <?php
-
-                                                echo
-
-                                                !empty($row['grade_updated'])
-
-                                                    ?
-
-                                                    date(
-
+                                                    ? date(
                                                         "M d, Y h:i A",
-
                                                         strtotime(
                                                             $row['grade_updated']
                                                         )
-
                                                     )
 
-                                                    :
-
-                                                    '-';
+                                                    : '-';
 
                                                 ?>
 
@@ -523,7 +401,52 @@ $checklist =
                                             <td>
 
                                                 <?php
-                                                echo $remarks;
+
+                                                if (
+
+                                                    $row['average'] === null ||
+
+                                                    $row['average'] === ''
+
+                                                ) {
+
+                                                    echo '
+
+            <span class="badge bg-secondary">
+
+                No Grade
+
+            </span>
+
+            ';
+                                                } elseif (
+
+                                                    floatval($row['average']) >= 75
+
+                                                ) {
+
+                                                    echo '
+
+            <span class="badge bg-success">
+
+                Passed
+
+            </span>
+
+            ';
+                                                } else {
+
+                                                    echo '
+
+            <span class="badge bg-danger">
+
+                Failed
+
+            </span>
+
+            ';
+                                                }
+
                                                 ?>
 
                                             </td>
@@ -536,20 +459,22 @@ $checklist =
                                 } else {
 
                                     ?>
-
                                     <tr>
 
-                                        <td
-                                            colspan="10"
-                                            class="
-                                    text-center
-                                    text-muted
-                                    py-5
-                                    ">
-
-                                            No enrolled subjects found.
-
-                                        </td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>No enrolled subjects found.</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
 
                                     </tr>
 
@@ -582,7 +507,7 @@ $checklist =
                 dom: 'fQrBtip',
                 responsive: true,
                 buttons: [
-                    
+
                     {
                         extend: 'excel',
                         text: 'Excel',

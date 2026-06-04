@@ -35,10 +35,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
     $stmt =
         $mysqli->prepare("
-        SELECT *
+
+        SELECT
+
+            student_profiles.*,
+
+            accounts.status
+
         FROM student_profiles
-        WHERE account_id = ?
+
+        INNER JOIN accounts
+
+            ON accounts.id =
+            student_profiles.account_id
+
+        WHERE
+
+            student_profiles.account_id = ?
+
         LIMIT 1
+
     ");
 
     $stmt->bind_param(

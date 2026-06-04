@@ -56,7 +56,17 @@
 
             <a class="nav-link" href="accounts.php">
 
-                View Accounts
+                View Admin Accounts
+
+            </a>
+            <a class="nav-link" href="student_accounts.php">
+
+                View Student Accounts
+
+            </a>
+            <a class="nav-link" href="faculty_accounts.php">
+
+                View Faculty Accounts
 
             </a>
 

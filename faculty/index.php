@@ -878,7 +878,27 @@ $assignments =
 
                                     <th width="150">
 
-                                        Grade
+                                        Prelim
+
+                                    </th>
+                                    <th width="150">
+
+                                        Midterms
+
+                                    </th>
+                                    <th width="150">
+
+                                        Prefinal
+
+                                    </th>
+                                    <th width="150">
+
+                                        Final
+
+                                    </th>
+                                    <th width="150">
+
+                                        Average
 
                                     </th>
 
@@ -1300,57 +1320,83 @@ $assignments =
 
                         html += `
 
-                <tr>
+<tr>
 
-                    <td>
+    <td>${student.student_number}</td>
 
-                        ${student.student_number}
+    <td>${student.full_name}</td>
 
-                    </td>
+    <td>${student.year_level}</td>
 
-                    <td>
+    <td>${student.section}</td>
 
-                        ${student.full_name}
+    <td>
 
-                    </td>
+        <input
+            type="number"
+            class="form-control prelimGrade"
+            min="0"
+            max="100"
+            step="0.01"
+            value="${student.prelim ?? ''}"
+        >
 
-                    <td>
+    </td>
 
-                        ${student.year_level}
+    <td>
 
-                    </td>
+        <input
+            type="number"
+            class="form-control midtermGrade"
+            min="0"
+            max="100"
+            step="0.01"
+            value="${student.midterm ?? ''}"
+        >
 
-                    <td>
+    </td>
 
-                        ${student.section}
+    <td>
 
-                    </td>
+        <input
+            type="number"
+            class="form-control prefinalGrade"
+            min="0"
+            max="100"
+            step="0.01"
+            value="${student.prefinal ?? ''}"
+        >
 
-                    <td>
+    </td>
 
-                        <input
-                            type="number"
-                            class="
-                            form-control
-                            gradeInput
-                            "
+    <td>
 
-                            min="0"
-                            max="100"
-                            step="0.01"
+        <input
+            type="number"
+            class="form-control finalGrade"
+            min="0"
+            max="100"
+            step="0.01"
+            value="${student.final ?? ''}"
+        >
 
-                            value="${student.grade ?? ''}"
+    </td>
 
-                            data-enrollment-id="
-                            ${student.enrollment_id}
-                            "
-                        >
+    <td>
 
-                    </td>
+        ${student.average ?? ''}
 
-                </tr>
+    </td>
 
-                `;
+    <input
+        type="hidden"
+        class="enrollmentId"
+        value="${student.enrollment_id}"
+    >
+
+</tr>
+
+`;;
 
                     });
 
@@ -1402,31 +1448,49 @@ $assignments =
         ===================================== */
 
         $('#saveGradesBtn').on(
-
             'click',
-
             function() {
 
                 let grades = [];
 
-                $('.gradeInput').each(function() {
+                $('#gradesTableBody tr').each(function() {
 
                     grades.push({
 
                         enrollment_id:
 
-                            $(this).data(
-                                'enrollment-id'
-                            ),
+                            $(this)
+                            .find('.enrollmentId')
+                            .val(),
 
-                        grade:
+                        prelim:
 
-                            $(this).val()
+                            $(this)
+                            .find('.prelimGrade')
+                            .val(),
+
+                        midterm:
+
+                            $(this)
+                            .find('.midtermGrade')
+                            .val(),
+
+                        prefinal:
+
+                            $(this)
+                            .find('.prefinalGrade')
+                            .val(),
+
+                        final:
+
+                            $(this)
+                            .find('.finalGrade')
+                            .val()
 
                     });
 
                 });
-
+                
                 $.ajax({
 
                     url: '../api/faculty_save_grades.php',
@@ -1435,9 +1499,7 @@ $assignments =
 
                     data: {
 
-                        grades: JSON.stringify(
-                            grades
-                        )
+                        grades: JSON.stringify(grades)
 
                     },
 
@@ -1445,7 +1507,10 @@ $assignments =
 
                     success: function(response) {
 
-                        if (response.success == 1) {
+
+                        if (
+                            response.success == 1
+                        ) {
 
                             alert(
                                 'Grades saved successfully.'
@@ -1466,7 +1531,6 @@ $assignments =
                 });
 
             }
-
         );
     </script>
 

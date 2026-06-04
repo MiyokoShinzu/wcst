@@ -1,8 +1,6 @@
 <?php
 
-header(
-    "Content-Type: application/json"
-);
+header("Content-Type: application/json");
 
 include '../src/connection.php';
 
@@ -14,22 +12,15 @@ global $mysqli;
 
 $grades =
     json_decode(
-
         $_POST['grades'] ?? '[]',
-
         true
-
     );
 
 /* =====================================
    VALIDATION
 ===================================== */
 
-if (
-
-    !is_array($grades)
-
-) {
+if (!is_array($grades)) {
 
     echo json_encode([
 
@@ -43,7 +34,7 @@ if (
 }
 
 /* =====================================
-   SAVE GRADES
+   SAVE
 ===================================== */
 
 foreach ($grades as $gradeData) {
@@ -53,25 +44,84 @@ foreach ($grades as $gradeData) {
             $gradeData['enrollment_id']
         );
 
-    $grade =
-        trim(
-            $gradeData['grade']
+    $prelim =
+        ($gradeData['prelim'] === '')
+        ? null
+        : floatval($gradeData['prelim']);
+
+    $midterm =
+        ($gradeData['midterm'] === '')
+        ? null
+        : floatval($gradeData['midterm']);
+
+    $prefinal =
+        ($gradeData['prefinal'] === '')
+        ? null
+        : floatval($gradeData['prefinal']);
+
+    $final =
+        ($gradeData['final'] === '')
+        ? null
+        : floatval($gradeData['final']);
+
+    $average = null;
+
+    $remarks = null;
+
+    if (
+
+        $prelim !== null &&
+
+        $midterm !== null &&
+
+        $prefinal !== null &&
+
+        $final !== null
+
+    ) {
+
+        $average = round(
+
+            (
+
+                $prelim +
+
+                $midterm +
+
+                $prefinal +
+
+                $final
+
+            ) / 4,
+
+            2
+
         );
 
-    /* =====================================
-       EMPTY GRADE
-    ===================================== */
+        $remarks =
+            ($average >= 75)
+            ? 'PASSED'
+            : 'FAILED';
+    }
 
-    if ($grade === '') {
-
-        $stmt =
-            $mysqli->prepare("
+    $stmt =
+        $mysqli->prepare("
 
             UPDATE enrolled_subjects
 
             SET
 
-                grade = NULL,
+                prelim = ?,
+
+                midterm = ?,
+
+                prefinal = ?,
+
+                final = ?,
+
+                average = ?,
+
+                remarks = ?,
 
                 grade_updated = NOW()
 
@@ -79,53 +129,28 @@ foreach ($grades as $gradeData) {
 
         ");
 
-        $stmt->bind_param(
-
-            "i",
-
-            $enrollment_id
-
-        );
-
-        $stmt->execute();
-
-        continue;
-    }
-
-    /* =====================================
-       UPDATE GRADE
-    ===================================== */
-
-    $stmt =
-        $mysqli->prepare("
-
-        UPDATE enrolled_subjects
-
-        SET
-
-            grade = ?,
-
-            grade_updated = NOW()
-
-        WHERE id = ?
-
-    ");
-
     $stmt->bind_param(
 
-        "di",
+        "ddddssi",
 
-        $grade,
+        $prelim,
+
+        $midterm,
+
+        $prefinal,
+
+        $final,
+
+        $average,
+
+        $remarks,
+
         $enrollment_id
 
     );
 
     $stmt->execute();
 }
-
-/* =====================================
-   RESPONSE
-===================================== */
 
 echo json_encode([
 

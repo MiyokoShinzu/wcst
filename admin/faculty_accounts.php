@@ -78,13 +78,13 @@
 
                     <h3 class="fw-bold text-primary">
 
-                        Manage Accounts
+                        Manage Faculty Accounts
 
                     </h3>
 
                     <p class="text-muted mb-0">
 
-                        View and manage all user accounts.
+                        View and manage all faculty accounts.
 
                     </p>
 
@@ -123,7 +123,6 @@
 
                                     <th>Email</th>
 
-                                    <th>Role</th>
 
                                     <th>Status</th>
 
@@ -276,7 +275,7 @@
             </div>
 
             <!-- STATUS -->
-            <div class="mb-4" style="position: absolute; opacity: 0; pointer-events: none;">
+            <div class="mb-4">
 
                 <label class="form-label">
 
@@ -294,7 +293,11 @@
 
                     </option>
 
-                   
+                    <option value="0">
+
+                        Pending Approval
+
+                    </option>
 
                 </select>
 
@@ -402,7 +405,7 @@
             </div>
 
             <!-- ROLE -->
-            <div class="mb-3" style="position: absolute; opacity: 0; pointer-events: none;">
+            <div class="mb-3" style="display: none;">
 
                 <label class="form-label">
 
@@ -414,30 +417,20 @@
                     class="form-select"
                     id="edit_role">
 
-                    <option value="admin">
-
-                        Admin
-
-                    </option>
-
                     <option value="faculty">
 
                         Faculty
 
                     </option>
 
-                    <option value="student">
-
-                        Student
-
-                    </option>
+                    
 
                 </select>
 
             </div>
 
             <!-- STATUS -->
-            <div class="mb-4" style="position: absolute; opacity: 0; pointer-events: none;">
+            <div class="mb-4" style="display: none;">
 
                 <label class="form-label">
 
@@ -453,9 +446,7 @@
                         Approve
                     </option>
 
-                    <option value="0">
-                        Pending
-                    </option>
+                   
 
                 </select>
 
@@ -525,153 +516,7 @@
      VIEW STUDENT PROFILE MODAL
 ===================================== -->
 
-    <div
-        id="viewStudentModal"
-        class="custom-modal">
-
-        <div class="custom-modal-content">
-
-            <!-- HEADER -->
-            <div class="
-        d-flex
-        justify-content-between
-        align-items-center
-        mb-4
-        ">
-
-                <h4 class="fw-bold mb-0">
-
-                    Student Profile
-
-                </h4>
-
-                <button
-                    onclick="closeStudentModal()"
-                    class="btn-close">
-                </button>
-
-            </div>
-
-            <!-- PROFILE CONTENT -->
-            <div class="row">
-
-                <div class="col-md-6 mb-3">
-
-                    <label class="form-label fw-bold">
-
-                        Student Number
-
-                    </label>
-
-                    <div id="view_student_number">
-
-                        -
-
-                    </div>
-
-                </div>
-
-                <div class="col-md-6 mb-3">
-
-                    <label class="form-label fw-bold">
-
-                        Full Name
-
-                    </label>
-
-                    <div id="view_fullname">
-
-                        -
-
-                    </div>
-
-                </div>
-
-                <div class="col-md-6 mb-3">
-
-                    <label class="form-label fw-bold">
-
-                        Year Level
-
-                    </label>
-
-                    <div id="view_year_level">
-
-                        -
-
-                    </div>
-
-                </div>
-
-                <div class="col-md-6 mb-3">
-
-                    <label class="form-label fw-bold">
-
-                        Section
-
-                    </label>
-
-                    <div id="view_section">
-
-                        -
-
-                    </div>
-
-                </div>
-
-                <div class="col-md-6 mb-3">
-
-                    <label class="form-label fw-bold">
-
-                        School Year
-
-                    </label>
-
-                    <div id="view_school_year">
-
-                        -
-
-                    </div>
-
-                </div>
-
-                <div class="col-md-6 mb-3">
-
-                    <label class="form-label fw-bold">
-
-                        Contact Number
-
-                    </label>
-
-                    <div id="view_contact_number">
-
-                        -
-
-                    </div>
-
-                </div>
-
-                <div class="col-12 mb-3">
-
-                    <label class="form-label fw-bold">
-
-                        Address
-
-                    </label>
-
-                    <div id="view_address">
-
-                        -
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
+ 
     <!-- SCRIPTS -->
     <?php include "../globals/admin_scripts.php" ?>
 
@@ -744,7 +589,7 @@
         ====================================== */
 
         fetch(
-                '../api/admin_select_accounts.php'
+                '../api/admin_select_accounts_faculty.php'
             )
 
             .then(
@@ -801,18 +646,7 @@
 
                     </td>
 
-                    <td>
-
-                        <span class="
-                        badge
-                        bg-primary
-                        ">
-
-                            ${account.role}
-
-                        </span>
-
-                    </td>
+                  
 
                     <td>
 
@@ -944,21 +778,7 @@
 
                     buttons: [
 
-                        {
-                            text: 'Add Account',
-
-                            className: 'add_account',
-
-                            attr: {
-
-                                'data-bs-toggle': 'modal',
-
-                                'data-bs-target': '#add_account',
-
-                                'title': 'Click to add account'
-                            }
-                        },
-
+                      
                         {
                             extend: 'excel',
 

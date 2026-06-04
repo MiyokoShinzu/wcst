@@ -1,8 +1,6 @@
 <?php
 
-header(
-    "Content-Type: application/json"
-);
+header("Content-Type: application/json");
 
 include '../src/connection.php';
 
@@ -17,20 +15,33 @@ $students =
     $_POST['students'] ?? [];
 
 /* =====================================
-   DELETE OLD
+   CURRENT STUDENTS
 ===================================== */
 
-$mysqli->query("
+$currentStudents = [];
 
-    DELETE FROM enrolled_subjects
+$result =
+    $mysqli->query("
 
-    WHERE academic_assignment_id =
-    '$academic_assignment_id'
+        SELECT student_profile_id
 
-");
+        FROM enrolled_subjects
+
+        WHERE academic_assignment_id =
+        '$academic_assignment_id'
+
+    ");
+
+while ($row = $result->fetch_assoc()) {
+
+    $currentStudents[] =
+        intval(
+            $row['student_profile_id']
+        );
+}
 
 /* =====================================
-   INSERT NEW
+   INSERT NEW STUDENTS
 ===================================== */
 
 foreach ($students as $student_profile_id) {
@@ -40,35 +51,98 @@ foreach ($students as $student_profile_id) {
             $student_profile_id
         );
 
-    $stmt =
-        $mysqli->prepare("
+    if (
 
-        INSERT INTO enrolled_subjects(
+        !in_array(
 
-            academic_assignment_id,
-            student_profile_id
+            $student_profile_id,
 
-        )
-
-        VALUES(
-
-            ?, ?
+            $currentStudents
 
         )
 
-    ");
+    ) {
 
-    $stmt->bind_param(
+        $stmt =
+            $mysqli->prepare("
 
-        "ii",
+                INSERT INTO enrolled_subjects(
 
-        $academic_assignment_id,
-        $student_profile_id
+                    academic_assignment_id,
+                    student_profile_id
 
-    );
+                )
 
-    $stmt->execute();
+                VALUES(
+
+                    ?, ?
+
+                )
+
+            ");
+
+        $stmt->bind_param(
+
+            "ii",
+
+            $academic_assignment_id,
+            $student_profile_id
+
+        );
+
+        $stmt->execute();
+    }
 }
+
+/* =====================================
+   REMOVE UNCHECKED STUDENTS
+===================================== */
+
+foreach ($currentStudents as $student_profile_id) {
+
+    if (
+
+        !in_array(
+
+            $student_profile_id,
+
+            $students
+
+        )
+
+    ) {
+
+        $stmt =
+            $mysqli->prepare("
+
+                DELETE FROM enrolled_subjects
+
+                WHERE
+
+                    academic_assignment_id = ?
+
+                    AND
+
+                    student_profile_id = ?
+
+            ");
+
+        $stmt->bind_param(
+
+            "ii",
+
+            $academic_assignment_id,
+            $student_profile_id
+
+        );
+
+        $stmt->execute();
+    }
+}
+
+/* =====================================
+   RESPONSE
+===================================== */
 
 echo json_encode([
 

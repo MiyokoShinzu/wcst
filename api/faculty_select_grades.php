@@ -1,31 +1,15 @@
 <?php
 
-header(
-    "Content-Type: application/json"
-);
+header("Content-Type: application/json");
 
 include '../src/connection.php';
 
 global $mysqli;
 
-/* =====================================
-   INPUT
-===================================== */
-
 $academic_assignment_id =
-    intval(
-        $_GET['academic_assignment_id'] ?? 0
-    );
-
-/* =====================================
-   DATA
-===================================== */
+    intval($_GET['academic_assignment_id'] ?? 0);
 
 $data = [];
-
-/* =====================================
-   SELECT ENROLLED STUDENTS
-===================================== */
 
 $query = "
 
@@ -34,7 +18,10 @@ $query = "
         enrolled_subjects.id
         AS enrollment_id,
 
-        enrolled_subjects.grade,
+        enrolled_subjects.prelim,
+        enrolled_subjects.midterm,
+        enrolled_subjects.prefinal,
+        enrolled_subjects.final,
 
         student_profiles.student_number,
 
@@ -47,33 +34,23 @@ $query = "
             student_profiles.firstname,
 
             IF(
-
                 student_profiles.middlename IS NULL
-                OR
-                student_profiles.middlename = '',
-
+                OR student_profiles.middlename = '',
                 '',
-
                 CONCAT(
                     ' ',
                     student_profiles.middlename
                 )
-
             ),
 
             IF(
-
                 student_profiles.suffix IS NULL
-                OR
-                student_profiles.suffix = '',
-
+                OR student_profiles.suffix = '',
                 '',
-
                 CONCAT(
                     ' ',
                     student_profiles.suffix
                 )
-
             )
 
         ) AS full_name,
@@ -98,61 +75,67 @@ $query = "
 
         student_profiles.lastname ASC,
 
-        student_profiles.firstname ASC,
-
-        student_profiles.middlename ASC
+        student_profiles.firstname ASC
 
 ";
 
-$result =
-    $mysqli->query($query);
+$result = $mysqli->query($query);
 
-/* =====================================
-   FETCH
-===================================== */
+while ($row = $result->fetch_assoc()) {
 
-while (
+    $average = null;
 
-    $row =
-    $result->fetch_assoc()
+    if (
+        $row['prelim'] !== null &&
+        $row['midterm'] !== null &&
+        $row['prefinal'] !== null &&
+        $row['final'] !== null
+    ) {
 
-) {
+        $average =
+            (
+                $row['prelim'] +
+                $row['midterm'] +
+                $row['prefinal'] +
+                $row['final']
+            ) / 4;
+    }
 
     $data[] = [
 
         'enrollment_id' =>
-
         $row['enrollment_id'],
 
-        'grade' =>
+        'prelim' =>
+        $row['prelim'],
 
-        $row['grade'],
+        'midterm' =>
+        $row['midterm'],
+
+        'prefinal' =>
+        $row['prefinal'],
+
+        'final' =>
+        $row['final'],
+
+        'average' =>
+        $average,
 
         'student_number' =>
-
         $row['student_number'],
 
         'full_name' =>
-
         $row['full_name'],
 
         'year_level' =>
-
         $row['year_level'],
 
         'section' =>
-
         $row['section']
 
     ];
 }
 
-/* =====================================
-   RESPONSE
-===================================== */
-
 echo json_encode([
-
     'data' => $data
-
 ]);

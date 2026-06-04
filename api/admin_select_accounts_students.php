@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             status,
             date_created
         FROM accounts
-        WHERE archived = 0 AND role = 'admin'
+        WHERE archived = 0 and role = 'student'
         ORDER BY id DESC
     ";
 
